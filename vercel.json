@@ -4,7 +4,7 @@
       "src": "package.json",
       "use": "@vercel/next",
       "config": {
-        "installCommand": "npm install && npx prisma generate",
+        "installCommand": "npm install",
         "buildCommand": "npx prisma generate && next build"
       }
     }
