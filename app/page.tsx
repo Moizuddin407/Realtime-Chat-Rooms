@@ -64,53 +64,64 @@ export default function ChatRoom() {
     let currentSocket: Socket | null = null;
 
     const socketInitializer = async () => {
-      await fetch("/api/socket")
-      const newSocket = io()
-      currentSocket = newSocket
-      
-      newSocket.on("connect", () => {
-        console.log("Connected to socket")
-        newSocket.emit("join-room", { roomId, username })
-      })
+      try {
+        await fetch("/api/socket")
+        const newSocket = io({
+          path: '/api/socket_io',
+          addTrailingSlash: false,
+        })
+        currentSocket = newSocket
+        
+        newSocket.on("connect", () => {
+          console.log("Connected to socket")
+          newSocket.emit("join-room", { roomId, username })
+        })
 
-      newSocket.on("user-joined", ({ username, status }: {
-        username: string;
-        status: string;
-      }) => {
-        console.log("User joined");
-        setRoomUsers(prev => [...prev, { username, status }])
-      })
+        newSocket.on("connect_error", (err) => {
+          console.error("Socket connection error:", err)
+        })
 
-      newSocket.on("room-users", (users: RoomUser[]) => {
-        console.log("Received room users:", users)
-        setRoomUsers(users)
-      })
+        newSocket.on("user-joined", ({ username, status }: {
+          username: string;
+          status: string;
+        }) => {
+          console.log("User joined");
+          setRoomUsers(prev => [...prev, { username, status }])
+        })
 
-      newSocket.on("user-status-changed", ({ username, status }: {
-        username: string;
-        status: string;
-      }) => {
-        setRoomUsers(prev => 
-          prev.map(user => 
-            user.username === username ? { ...user, status } : user
+        newSocket.on("room-users", (users: RoomUser[]) => {
+          console.log("Received room users:", users)
+          setRoomUsers(users)
+        })
+
+        newSocket.on("user-status-changed", ({ username, status }: {
+          username: string;
+          status: string;
+        }) => {
+          setRoomUsers(prev => 
+            prev.map(user => 
+              user.username === username ? { ...user, status } : user
+            )
           )
-        )
-      })
+        })
 
-      newSocket.on("new-message", (message) => {
-        console.log("New message received:", message)
-        setMessages((prev) => [...prev, message])
-      })
+        newSocket.on("new-message", (message) => {
+          console.log("New message received:", message)
+          setMessages((prev) => [...prev, message])
+        })
 
-      newSocket.on("reaction-added", ({ messageId, reactions }) => {
-        setMessages((prev) =>
-          prev.map((msg) =>
-            msg.id === messageId ? { ...msg, reactions } : msg
+        newSocket.on("reaction-added", ({ messageId, reactions }) => {
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.id === messageId ? { ...msg, reactions } : msg
+            )
           )
-        )
-      })
+        })
 
-      setSocket(newSocket)
+        setSocket(newSocket)
+      } catch (error) {
+        console.error("Socket initialization error:", error)
+      }
     }
 
     socketInitializer()
