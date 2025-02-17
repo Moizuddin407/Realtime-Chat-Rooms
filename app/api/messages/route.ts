@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
+import { db } from '@/lib/db'
 import { broadcast } from '@/app/utils/broadcast'
+
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+export const preferredRegion = 'auto'
 
 export async function POST(req: Request) {
   try {
@@ -17,7 +21,7 @@ export async function POST(req: Request) {
 
     const { text, sender, roomId } = body
     
-    const message = await prisma.message.create({
+    const message = await db.message.create({
       data: {
         text,
         sender: {
@@ -86,7 +90,7 @@ export async function GET(req: Request) {
 
     console.log('Fetching messages for room:', roomId)
     
-    const messages = await prisma.message.findMany({
+    const messages = await db.message.findMany({
       where: {
         room: { id: roomId }
       },
