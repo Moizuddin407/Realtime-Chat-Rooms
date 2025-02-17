@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { clients } from '@/app/utils/broadcast'
 
 interface BroadcastMessage {
   type: string
@@ -12,9 +13,6 @@ interface BroadcastMessage {
     reactions: Record<string, string[]>
   }
 }
-
-// Store connected clients with their active status
-const clients = new Map<ReadableStreamDefaultController, boolean>()
 
 // Function to broadcast message to all active clients
 export function broadcast(message: BroadcastMessage) {

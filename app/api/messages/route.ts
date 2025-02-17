@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
-import { broadcast } from '../events/route'
+import { broadcast } from '@/app/utils/broadcast'
 
 const prisma = new PrismaClient()
 
