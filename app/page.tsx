@@ -170,7 +170,7 @@ export default function ChatRoom() {
         }
         console.log("Attempting to send message:", messageData)
         
-        socket.emit("send-message", messageData, (error: any) => {
+        socket.emit("send-message", messageData, (error: Error | null) => {
           if (error) {
             console.error("Message send error:", error)
           } else {
@@ -181,7 +181,11 @@ export default function ChatRoom() {
         setInputMessage("")
         setIsTyping(false)
       } catch (error) {
-        console.error("Error sending message:", error)
+        if (error instanceof Error) {
+          console.error("Error sending message:", error.message)
+        } else {
+          console.error("Unknown error sending message")
+        }
       }
     }
   }
