@@ -7,8 +7,8 @@
 6 silly config load:file:C:\Users\saadr\AppData\Roaming\npm\etc\npmrc
 7 verbose title npm config get registry
 8 verbose argv "config" "get" "registry"
-9 verbose logfile logs-max:10 dir:C:\Users\saadr\Desktop\Moiz\chat-room-ui\%APPDATA%\npm-cache\_logs\2025-02-17T21_52_32_465Z-
-10 verbose logfile C:\Users\saadr\Desktop\Moiz\chat-room-ui\%APPDATA%\npm-cache\_logs\2025-02-17T21_52_32_465Z-debug-0.log
+9 verbose logfile logs-max:10 dir:C:\Users\saadr\Desktop\Moiz\chat-room-ui\%APPDATA%\npm-cache\_logs\2025-02-17T22_45_24_349Z-
+10 verbose logfile C:\Users\saadr\Desktop\Moiz\chat-room-ui\%APPDATA%\npm-cache\_logs\2025-02-17T22_45_24_349Z-debug-0.log
 11 verbose cwd C:\Users\saadr\Desktop\Moiz\chat-room-ui
 12 verbose os Windows_NT 10.0.22631
 13 verbose node v18.20.5

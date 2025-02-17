@@ -53,52 +53,86 @@ export default function Page() {
   useEffect(scrollToBottom, [messages])
 
   useEffect(() => {
-    if (hasJoined) {
-      const eventSource = new EventSource('/api/events')
+    if (hasJoined && roomId) {
+      let eventSource: EventSource | null = null;
       
-      eventSource.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data)
-          if (data.type === 'message') {
-            setMessages(prev => [...prev, data.message])
-          }
-        } catch (error) {
-          console.error('Error processing message:', error)
+      const connectSSE = () => {
+        console.log('Connecting to SSE for room:', roomId);
+        if (eventSource) {
+          eventSource.close();
         }
-      }
-      
-      // Load existing messages
-      fetch(`/api/messages?roomId=${roomId}`)
-        .then(res => res.json())
-        .then(data => {
-          console.log('Loaded messages:', data)
-          setMessages(data)
-        })
-        .catch(err => console.error('Error loading messages:', err))
-      
+        
+        eventSource = new EventSource(`/api/events?roomId=${roomId}`);
+        
+        eventSource.onopen = () => {
+          console.log('SSE connection opened for room:', roomId);
+        };
+        
+        eventSource.onmessage = (event) => {
+          console.log('Received SSE message:', event.data);
+          try {
+            const data = JSON.parse(event.data);
+            
+            if (data.type === 'message' && data.message) {
+              setMessages(prev => {
+                // Check if message already exists
+                if (prev.some(m => m.id === data.message.id)) {
+                  return prev;
+                }
+                return [...prev, data.message];
+              });
+            }
+          } catch (error) {
+            console.error('Error processing SSE message:', error);
+          }
+        };
+
+        eventSource.onerror = (error) => {
+          console.error('SSE error:', error);
+          eventSource?.close();
+          // Reconnect after a short delay
+          setTimeout(connectSSE, 1000);
+        };
+      };
+
+      connectSSE();
+
+      // Cleanup function
       return () => {
-        eventSource.close()
-      }
+        if (eventSource) {
+          console.log('Closing SSE connection');
+          eventSource.close();
+        }
+      };
     }
-  }, [hasJoined, roomId])
+  }, [hasJoined, roomId]);
 
   const handleJoinRoom = async (e: React.FormEvent) => {
     e.preventDefault()
     if (username.trim() && roomId.trim().length >= 3) {
       setIsJoining(true)
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      setMessages([
-        {
-          id: Date.now().toString(),
-          text: `Welcome to room ${roomId}, ${username}!`,
-          sender: { username },
-          createdAt: new Date().toISOString(),
-          reactions: {},
-        },
-      ])
-      setIsJoining(false)
-      setHasJoined(true)
+      try {
+        // Load existing messages first
+        const res = await fetch(`/api/messages?roomId=${roomId}`)
+        const existingMessages = await res.json()
+        
+        setMessages([
+          ...existingMessages,
+          {
+            id: Date.now().toString(),
+            text: `Welcome to room ${roomId}, ${username}!`,
+            sender: { username: 'system' },
+            createdAt: new Date().toISOString(),
+            reactions: {},
+          },
+        ])
+        
+        setIsJoining(false)
+        setHasJoined(true)
+      } catch (error) {
+        console.error('Error joining room:', error)
+        setIsJoining(false)
+      }
     }
   }
 
@@ -250,13 +284,7 @@ export default function Page() {
           </div>
           <button
             type="submit"
-            disabled={isJoining || !username.trim() || roomId.trim().length < 3}
-            onClick={(e) => {
-              if (!username.trim() || roomId.trim().length < 3) {
-                e.preventDefault();
-                console.log('Button clicked but validation failed');
-              }
-            }}
+            disabled={!username.trim() || roomId.trim().length < 3}
             className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isJoining ? (

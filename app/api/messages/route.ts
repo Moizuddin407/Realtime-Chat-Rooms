@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { broadcast } from '@/app/utils/broadcast'
+import { broadcast, getActiveClients } from '@/app/utils/broadcast'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
@@ -9,70 +9,53 @@ export const preferredRegion = 'auto'
 export async function POST(req: Request) {
   try {
     const body = await req.json()
-    console.log('Received message request:', body)
     
     if (!body.text || !body.sender || !body.roomId) {
-      console.error('Missing required fields:', body)
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
       )
     }
 
-    const { text, sender, roomId } = body
-    
     const message = await db.message.create({
       data: {
-        text,
+        text: body.text,
         sender: {
           connectOrCreate: {
-            where: { username: sender },
-            create: { 
-              username: sender, 
-              status: 'online',
-              socketId: null
-            }
+            where: { username: body.sender },
+            create: { username: body.sender }
           }
         },
         room: {
           connectOrCreate: {
-            where: { id: roomId },
+            where: { id: body.roomId },
             create: { 
-              id: roomId, 
-              name: roomId 
+              id: body.roomId,
+              name: `Room ${body.roomId}`
             }
           }
-        },
-        reactions: {}
+        }
       },
       include: {
         sender: true
       }
     })
-    
-    console.log('Message created successfully:', message)
 
-    // Broadcast the new message to all clients
+    console.log(`Active clients before broadcast: ${getActiveClients(body.roomId)}`)
+
     broadcast({
       type: 'message',
+      roomId: body.roomId,
       message: {
-        id: message.id,
-        text: message.text,
-        sender: {
-          username: message.sender.username
-        },
-        createdAt: message.createdAt.toISOString(),
-        reactions: message.reactions as Record<string, string[]> || {}
+        ...message,
+        createdAt: message.createdAt.toISOString()
       }
     })
-    
+
     return NextResponse.json(message)
   } catch (error) {
-    console.error('Failed to send message:', error)
-    return NextResponse.json(
-      { error: 'Failed to send message', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
-    )
+    console.error('Error in POST /api/messages:', error)
+    return NextResponse.json({ error: 'Failed to send message' }, { status: 500 })
   }
 }
 
@@ -105,10 +88,7 @@ export async function GET(req: Request) {
     console.log(`Found ${messages.length} messages`)
     return NextResponse.json(messages)
   } catch (error) {
-    console.error('Failed to fetch messages:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch messages', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
-    )
+    console.error('Error in GET /api/messages:', error)
+    return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 })
   }
 } 
