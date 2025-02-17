@@ -1,0 +1,12 @@
+{
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next",
+      "config": {
+        "installCommand": "npm install && prisma generate",
+        "buildCommand": "prisma generate && next build"
+      }
+    }
+  ]
+} 
