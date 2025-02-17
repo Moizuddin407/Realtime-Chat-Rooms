@@ -1,14 +1,10 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "./providers/theme-provider"
-
-const inter = Inter({ subsets: ["latin"] })
+import './globals.css'
+import type { Metadata } from 'next'
+import { ThemeProvider } from './providers/theme-provider'
 
 export const metadata: Metadata = {
-  title: "Chat Room",
-  description: "A real-time chat room application",
+  title: 'Chat Room',
+  description: 'Real-time chat application',
 }
 
 export default function RootLayout({
@@ -18,8 +14,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           {children}
         </ThemeProvider>
       </body>

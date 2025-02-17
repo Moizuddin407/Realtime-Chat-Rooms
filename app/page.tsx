@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
 import { Send, Paperclip, SmilePlus, Moon, Sun, Loader2, Hash, Users, Settings, LogOut } from "lucide-react"
-import { useTheme } from "./providers/theme-provider"
+import { useTheme } from "@/app/providers/theme-provider"
 
 type Message = {
   id: string
@@ -31,7 +31,7 @@ function Avatar({ name, size = 40 }: { name: string; size?: number }) {
   )
 }
 
-export default function ChatRoom() {
+export default function Page() {
   const { theme, setTheme } = useTheme()
   const [roomId, setRoomId] = useState("")
   const [messages, setMessages] = useState<Message[]>([])
