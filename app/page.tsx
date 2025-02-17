@@ -5,7 +5,6 @@ import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { Send, Paperclip, SmilePlus, Moon, Sun, Loader2, Hash, Users, Settings, LogOut } from "lucide-react"
 import { useTheme } from "./providers/theme-provider"
-import io, { Socket } from "socket.io-client"
 
 type Message = {
   id: string
@@ -13,7 +12,7 @@ type Message = {
   sender: {
     username: string
   }
-  timestamp: string
+  createdAt: string
   reactions: Record<string, string[]>
 }
 
@@ -50,7 +49,6 @@ export default function ChatRoom() {
   const [showSidebar, setShowSidebar] = useState(true)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [socket, setSocket] = useState<Socket | null>(null)
   const [hasJoined, setHasJoined] = useState(false)
   const [roomUsers, setRoomUsers] = useState<RoomUser[]>([])
 
@@ -61,83 +59,34 @@ export default function ChatRoom() {
   useEffect(scrollToBottom, [messages])
 
   useEffect(() => {
-    let currentSocket: Socket | null = null;
-
-    const socketInitializer = async () => {
-      try {
-        await fetch("/api/socket")
-        const newSocket = io({
-          path: "/api/socket",
-          addTrailingSlash: false,
-          reconnection: true,
-          reconnectionAttempts: 5,
-          transports: ['polling'],
-          upgrade: false
-        })
-        
-        currentSocket = newSocket
-        setSocket(newSocket)
-        
-        newSocket.on("connect", () => {
-          console.log("Connected to socket")
-          if (roomId && username) {
-            newSocket.emit("join-room", { roomId, username })
+    if (hasJoined) {
+      const eventSource = new EventSource('/api/events')
+      
+      eventSource.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data)
+          if (data.type === 'message') {
+            setMessages(prev => [...prev, data.message])
           }
+        } catch (error) {
+          console.error('Error processing message:', error)
+        }
+      }
+      
+      // Load existing messages
+      fetch(`/api/messages?roomId=${roomId}`)
+        .then(res => res.json())
+        .then(data => {
+          console.log('Loaded messages:', data)
+          setMessages(data)
         })
-
-        newSocket.on("connect_error", (err) => {
-          console.error("Connection error:", err)
-        })
-
-        newSocket.on("user-joined", ({ username, status }: {
-          username: string;
-          status: string;
-        }) => {
-          console.log("User joined");
-          setRoomUsers(prev => [...prev, { username, status }])
-        })
-
-        newSocket.on("room-users", (users: RoomUser[]) => {
-          console.log("Received room users:", users)
-          setRoomUsers(users)
-        })
-
-        newSocket.on("user-status-changed", ({ username, status }: {
-          username: string;
-          status: string;
-        }) => {
-          setRoomUsers(prev => 
-            prev.map(user => 
-              user.username === username ? { ...user, status } : user
-            )
-          )
-        })
-
-        newSocket.on("new-message", (message) => {
-          console.log("New message received:", message)
-          setMessages((prev) => [...prev, message])
-        })
-
-        newSocket.on("reaction-added", ({ messageId, reactions }) => {
-          setMessages((prev) =>
-            prev.map((msg) =>
-              msg.id === messageId ? { ...msg, reactions } : msg
-            )
-          )
-        })
-      } catch (error) {
-        console.error("Socket initialization error:", error)
+        .catch(err => console.error('Error loading messages:', err))
+      
+      return () => {
+        eventSource.close()
       }
     }
-
-    socketInitializer()
-
-    return () => {
-      if (currentSocket) {
-        currentSocket.disconnect()
-      }
-    }
-  }, [roomId, username])
+  }, [hasJoined, roomId])
 
   const handleJoinRoom = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -150,7 +99,7 @@ export default function ChatRoom() {
           id: Date.now().toString(),
           text: `Welcome to room ${roomId}, ${username}!`,
           sender: { username },
-          timestamp: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
           reactions: {},
         },
       ])
@@ -161,31 +110,26 @@ export default function ChatRoom() {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (inputMessage.trim() !== "" && socket) {
+    if (inputMessage.trim() !== '') {
       try {
-        const messageData = {
-          text: inputMessage,
-          sender: username,
-          roomId,
-        }
-        console.log("Attempting to send message:", messageData)
-        
-        socket.emit("send-message", messageData, (error: Error | null) => {
-          if (error) {
-            console.error("Message send error:", error)
-          } else {
-            console.log("Message sent successfully")
-          }
+        const res = await fetch('/api/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            text: inputMessage,
+            sender: username,
+            roomId
+          })
         })
         
-        setInputMessage("")
+        if (!res.ok) throw new Error('Failed to send message')
+        
+        setInputMessage('')
         setIsTyping(false)
       } catch (error) {
-        if (error instanceof Error) {
-          console.error("Error sending message:", error.message)
-        } else {
-          console.error("Unknown error sending message")
-        }
+        console.error('Error sending message:', error)
       }
     }
   }
@@ -207,7 +151,7 @@ export default function ChatRoom() {
         id: Date.now().toString(),
         text: `Uploaded file: ${file.name}`,
         sender: { username },
-        timestamp: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
         reactions: {},
       }
       setMessages([...messages, newMessage])
@@ -243,7 +187,6 @@ export default function ChatRoom() {
 
   const handleStatusChange = (status: UserStatus) => {
     setUserStatus(status)
-    socket?.emit("status-change", { username, status })
   }
 
   if (!hasJoined) {
@@ -434,7 +377,7 @@ export default function ChatRoom() {
                     {message.sender.username}
                   </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400">
-                    {new Date(message.timestamp).toLocaleTimeString()}
+                    {new Date(message.createdAt).toLocaleTimeString()}
                   </span>
                 </div>
                 <div
@@ -521,4 +464,3 @@ export default function ChatRoom() {
     </div>
   )
 }
-
