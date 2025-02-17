@@ -4,8 +4,6 @@ export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
 export const preferredRegion = 'auto'
 
-const connectedClients = new Set<ReadableStreamDefaultController>()
-
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const roomId = searchParams.get('roomId')
@@ -15,10 +13,4 @@ export async function GET(request: Request) {
   }
 
   return createEventStream(roomId)
-}
-
-export function broadcast(message: any) {
-  connectedClients.forEach(client => {
-    client.enqueue(`data: ${JSON.stringify(message)}\n\n`)
-  })
 } 
