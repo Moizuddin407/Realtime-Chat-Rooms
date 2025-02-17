@@ -50,7 +50,6 @@ export default function ChatRoom() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [hasJoined, setHasJoined] = useState(false)
-  const [roomUsers, setRoomUsers] = useState<RoomUser[]>([])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -308,26 +307,6 @@ export default function ChatRoom() {
                 <LogOut className="h-5 w-5 text-gray-500 dark:text-gray-400" />
               </button>
             </div>
-          </div>
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
-              Users in Room ({roomUsers.length})
-            </h3>
-            {roomUsers.map((user) => (
-              <div 
-                key={user.username}
-                className="flex items-center space-x-2 mb-2"
-              >
-                <div className={`w-2 h-2 rounded-full ${
-                  user.status === 'online' ? 'bg-green-500' :
-                  user.status === 'away' ? 'bg-yellow-500' : 'bg-gray-500'
-                }`} />
-                <span className="text-gray-700 dark:text-gray-300">
-                  {user.username}
-                  {user.username === username && " (you)"}
-                </span>
-              </div>
-            ))}
           </div>
         </aside>
       )}

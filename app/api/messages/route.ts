@@ -28,7 +28,7 @@ export async function POST(req: Request) {
             create: { 
               username: sender, 
               status: 'online',
-              socketId: null // Add this since we're not using sockets
+              socketId: null
             }
           }
         },
@@ -48,12 +48,18 @@ export async function POST(req: Request) {
     })
     
     console.log('Message created successfully:', message)
-    
+
+    // Broadcast the new message to all clients
     broadcast({
       type: 'message',
       message: {
-        ...message,
-        timestamp: message.createdAt.toISOString()
+        id: message.id,
+        text: message.text,
+        sender: {
+          username: message.sender.username
+        },
+        createdAt: message.createdAt.toISOString(),
+        reactions: message.reactions
       }
     })
     
