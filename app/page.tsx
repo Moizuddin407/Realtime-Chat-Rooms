@@ -65,20 +65,24 @@ export default function ChatRoom() {
 
     const socketInitializer = async () => {
       try {
-        const newSocket = io(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000', {
+        await fetch("/api/socket")
+        const newSocket = io({
           path: "/api/socket",
           addTrailingSlash: false,
           reconnection: true,
           reconnectionAttempts: 5,
-          transports: ['polling', 'websocket'],
-          forceNew: true
+          transports: ['polling'],
+          upgrade: false
         })
         
         currentSocket = newSocket
+        setSocket(newSocket)
         
         newSocket.on("connect", () => {
           console.log("Connected to socket")
-          newSocket.emit("join-room", { roomId, username })
+          if (roomId && username) {
+            newSocket.emit("join-room", { roomId, username })
+          }
         })
 
         newSocket.on("connect_error", (err) => {
@@ -121,8 +125,6 @@ export default function ChatRoom() {
             )
           )
         })
-
-        setSocket(newSocket)
       } catch (error) {
         console.error("Socket initialization error:", error)
       }
