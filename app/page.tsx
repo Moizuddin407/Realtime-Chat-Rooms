@@ -159,18 +159,30 @@ export default function ChatRoom() {
     }
   }
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
     if (inputMessage.trim() !== "" && socket) {
-      const messageData = {
-        text: inputMessage,
-        sender: username,
-        roomId,
+      try {
+        const messageData = {
+          text: inputMessage,
+          sender: username,
+          roomId,
+        }
+        console.log("Attempting to send message:", messageData)
+        
+        socket.emit("send-message", messageData, (error: any) => {
+          if (error) {
+            console.error("Message send error:", error)
+          } else {
+            console.log("Message sent successfully")
+          }
+        })
+        
+        setInputMessage("")
+        setIsTyping(false)
+      } catch (error) {
+        console.error("Error sending message:", error)
       }
-      console.log("Sending message:", messageData)
-      socket.emit("send-message", messageData)
-      setInputMessage("")
-      setIsTyping(false)
     }
   }
 

@@ -3,9 +3,21 @@ import { NextApiRequest } from "next"
 import { NextApiResponseServerIO } from "../../types/next"
 import { PrismaClient } from "@prisma/client"
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+  log: ['query', 'error', 'warn']
+})
 
 const SocketHandler = async (req: NextApiRequest, res: NextApiResponseServerIO) => {
+  console.log("Socket handler called")
+  
+  // Test database connection
+  try {
+    await prisma.$connect()
+    console.log("Database connected successfully")
+  } catch (error) {
+    console.error("Database connection error:", error)
+  }
+
   if (res.socket.server.io) {
     console.log("Socket already running")
   } else {
