@@ -4,9 +4,12 @@
       "src": "package.json",
       "use": "@vercel/next",
       "config": {
-        "installCommand": "npm install && prisma generate",
-        "buildCommand": "prisma generate && next build"
+        "installCommand": "npm install && npx prisma generate",
+        "buildCommand": "npx prisma generate && next build"
       }
     }
-  ]
+  ],
+  "env": {
+    "PRISMA_GENERATE_DATAPROXY": "true"
+  }
 } 
