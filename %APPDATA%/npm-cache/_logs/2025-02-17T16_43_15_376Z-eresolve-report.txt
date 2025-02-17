@@ -1,0 +1,236 @@
+'Log files:
+C:\Users\saadr\Desktop\Moiz\chat-room-ui\%APPDATA%\npm-cache\_logs\2025-02-17T16_43_15_376Z-debug-0.log
+
+# npm resolution error report
+
+While resolving: react-avatar@5.0.3
+Found: react@19.0.0
+node_modules/react
+  peer react@">=16.8.0" from @floating-ui/react@0.26.28
+  node_modules/@floating-ui/react
+    @floating-ui/react@"^0.26.16" from @headlessui/react@2.2.0
+    node_modules/@headlessui/react
+      @headlessui/react@"^2.2.0" from the root project
+  peer react@">=16.8.0" from @floating-ui/react-dom@2.1.2
+  node_modules/@floating-ui/react-dom
+    @floating-ui/react-dom@"^2.1.2" from @floating-ui/react@0.26.28
+    node_modules/@floating-ui/react
+      @floating-ui/react@"^0.26.16" from @headlessui/react@2.2.0
+      node_modules/@headlessui/react
+        @headlessui/react@"^2.2.0" from the root project
+  peer react@"^18 || ^19 || ^19.0.0-rc" from @headlessui/react@2.2.0
+  node_modules/@headlessui/react
+    @headlessui/react@"^2.2.0" from the root project
+  peer react@">= 16 || ^19.0.0-rc" from @heroicons/react@2.2.0
+  node_modules/@heroicons/react
+    @heroicons/react@"^2.2.0" from the root project
+  peer react@"^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" from @react-aria/focus@3.19.1
+  node_modules/@react-aria/focus
+    @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+    node_modules/@headlessui/react
+      @headlessui/react@"^2.2.0" from the root project
+  peer react@"^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" from @react-aria/interactions@3.23.0
+  node_modules/@react-aria/interactions
+    @react-aria/interactions@"^3.21.3" from @headlessui/react@2.2.0
+    node_modules/@headlessui/react
+      @headlessui/react@"^2.2.0" from the root project
+    @react-aria/interactions@"^3.23.0" from @react-aria/focus@3.19.1
+    node_modules/@react-aria/focus
+      @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+      node_modules/@headlessui/react
+        @headlessui/react@"^2.2.0" from the root project
+  peer react@"^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" from @react-aria/ssr@3.9.7
+  node_modules/@react-aria/ssr
+    @react-aria/ssr@"^3.9.7" from @react-aria/interactions@3.23.0
+    node_modules/@react-aria/interactions
+      @react-aria/interactions@"^3.21.3" from @headlessui/react@2.2.0
+      node_modules/@headlessui/react
+        @headlessui/react@"^2.2.0" from the root project
+      @react-aria/interactions@"^3.23.0" from @react-aria/focus@3.19.1
+      node_modules/@react-aria/focus
+        @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+    @react-aria/ssr@"^3.9.7" from @react-aria/utils@3.27.0
+    node_modules/@react-aria/utils
+      @react-aria/utils@"^3.27.0" from @react-aria/focus@3.19.1
+      node_modules/@react-aria/focus
+        @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+      @react-aria/utils@"^3.27.0" from @react-aria/interactions@3.23.0
+      node_modules/@react-aria/interactions
+        @react-aria/interactions@"^3.21.3" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+        @react-aria/interactions@"^3.23.0" from @react-aria/focus@3.19.1
+        node_modules/@react-aria/focus
+          @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+          node_modules/@headlessui/react
+            @headlessui/react@"^2.2.0" from the root project
+  peer react@"^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" from @react-aria/utils@3.27.0
+  node_modules/@react-aria/utils
+    @react-aria/utils@"^3.27.0" from @react-aria/focus@3.19.1
+    node_modules/@react-aria/focus
+      @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+      node_modules/@headlessui/react
+        @headlessui/react@"^2.2.0" from the root project
+    @react-aria/utils@"^3.27.0" from @react-aria/interactions@3.23.0
+    node_modules/@react-aria/interactions
+      @react-aria/interactions@"^3.21.3" from @headlessui/react@2.2.0
+      node_modules/@headlessui/react
+        @headlessui/react@"^2.2.0" from the root project
+      @react-aria/interactions@"^3.23.0" from @react-aria/focus@3.19.1
+      node_modules/@react-aria/focus
+        @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+  peer react@"^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" from @react-stately/utils@3.10.5
+  node_modules/@react-stately/utils
+    @react-stately/utils@"^3.10.5" from @react-aria/utils@3.27.0
+    node_modules/@react-aria/utils
+      @react-aria/utils@"^3.27.0" from @react-aria/focus@3.19.1
+      node_modules/@react-aria/focus
+        @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+      @react-aria/utils@"^3.27.0" from @react-aria/interactions@3.23.0
+      node_modules/@react-aria/interactions
+        @react-aria/interactions@"^3.21.3" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+        @react-aria/interactions@"^3.23.0" from @react-aria/focus@3.19.1
+        node_modules/@react-aria/focus
+          @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+          node_modules/@headlessui/react
+            @headlessui/react@"^2.2.0" from the root project
+  peer react@"^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" from @react-types/shared@3.27.0
+  node_modules/@react-types/shared
+    @react-types/shared@"^3.27.0" from @react-aria/focus@3.19.1
+    node_modules/@react-aria/focus
+      @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+      node_modules/@headlessui/react
+        @headlessui/react@"^2.2.0" from the root project
+    @react-types/shared@"^3.27.0" from @react-aria/interactions@3.23.0
+    node_modules/@react-aria/interactions
+      @react-aria/interactions@"^3.21.3" from @headlessui/react@2.2.0
+      node_modules/@headlessui/react
+        @headlessui/react@"^2.2.0" from the root project
+      @react-aria/interactions@"^3.23.0" from @react-aria/focus@3.19.1
+      node_modules/@react-aria/focus
+        @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+    @react-types/shared@"^3.27.0" from @react-aria/utils@3.27.0
+    node_modules/@react-aria/utils
+      @react-aria/utils@"^3.27.0" from @react-aria/focus@3.19.1
+      node_modules/@react-aria/focus
+        @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+      @react-aria/utils@"^3.27.0" from @react-aria/interactions@3.23.0
+      node_modules/@react-aria/interactions
+        @react-aria/interactions@"^3.21.3" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+        @react-aria/interactions@"^3.23.0" from @react-aria/focus@3.19.1
+        node_modules/@react-aria/focus
+          @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+          node_modules/@headlessui/react
+            @headlessui/react@"^2.2.0" from the root project
+  peer react@"^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0" from @tanstack/react-virtual@3.13.0
+  node_modules/@tanstack/react-virtual
+    @tanstack/react-virtual@"^3.8.1" from @headlessui/react@2.2.0
+    node_modules/@headlessui/react
+      @headlessui/react@"^2.2.0" from the root project
+  peer react@"^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0" from lucide-react@0.475.0
+  node_modules/lucide-react
+    lucide-react@"^0.475.0" from the root project
+  peer react@"^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0" from next@15.1.7
+  node_modules/next
+    next@"15.1.7" from the root project
+  peer react@"^19.0.0" from react-dom@19.0.0
+  node_modules/react-dom
+    peer react-dom@">=16.8.0" from @floating-ui/react@0.26.28
+    node_modules/@floating-ui/react
+      @floating-ui/react@"^0.26.16" from @headlessui/react@2.2.0
+      node_modules/@headlessui/react
+        @headlessui/react@"^2.2.0" from the root project
+    peer react-dom@">=16.8.0" from @floating-ui/react-dom@2.1.2
+    node_modules/@floating-ui/react-dom
+      @floating-ui/react-dom@"^2.1.2" from @floating-ui/react@0.26.28
+      node_modules/@floating-ui/react
+        @floating-ui/react@"^0.26.16" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+    peer react-dom@"^18 || ^19 || ^19.0.0-rc" from @headlessui/react@2.2.0
+    node_modules/@headlessui/react
+      @headlessui/react@"^2.2.0" from the root project
+    peer react-dom@"^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" from @react-aria/focus@3.19.1
+    node_modules/@react-aria/focus
+      @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+      node_modules/@headlessui/react
+        @headlessui/react@"^2.2.0" from the root project
+    peer react-dom@"^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" from @react-aria/interactions@3.23.0
+    node_modules/@react-aria/interactions
+      @react-aria/interactions@"^3.21.3" from @headlessui/react@2.2.0
+      node_modules/@headlessui/react
+        @headlessui/react@"^2.2.0" from the root project
+      @react-aria/interactions@"^3.23.0" from @react-aria/focus@3.19.1
+      node_modules/@react-aria/focus
+        @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+    peer react-dom@"^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1" from @react-aria/utils@3.27.0
+    node_modules/@react-aria/utils
+      @react-aria/utils@"^3.27.0" from @react-aria/focus@3.19.1
+      node_modules/@react-aria/focus
+        @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+      @react-aria/utils@"^3.27.0" from @react-aria/interactions@3.23.0
+      node_modules/@react-aria/interactions
+        @react-aria/interactions@"^3.21.3" from @headlessui/react@2.2.0
+        node_modules/@headlessui/react
+          @headlessui/react@"^2.2.0" from the root project
+        @react-aria/interactions@"^3.23.0" from @react-aria/focus@3.19.1
+        node_modules/@react-aria/focus
+          @react-aria/focus@"^3.17.1" from @headlessui/react@2.2.0
+          node_modules/@headlessui/react
+            @headlessui/react@"^2.2.0" from the root project
+    peer react-dom@"^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0" from @tanstack/react-virtual@3.13.0
+    node_modules/@tanstack/react-virtual
+      @tanstack/react-virtual@"^3.8.1" from @headlessui/react@2.2.0
+      node_modules/@headlessui/react
+        @headlessui/react@"^2.2.0" from the root project
+    peer react-dom@"^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0" from next@15.1.7
+    node_modules/next
+      next@"15.1.7" from the root project
+    react-dom@"^19.0.0" from the root project
+    peer react-dom@"^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc" from next-themes@0.4.4
+    node_modules/next-themes
+      next-themes@"*" from the root project
+  peer react@">= 16.8.0 || 17.x.x || ^18.0.0-0 || ^19.0.0-0" from styled-jsx@5.1.6
+  node_modules/styled-jsx
+    styled-jsx@"5.1.6" from next@15.1.7
+    node_modules/next
+      next@"15.1.7" from the root project
+  react@"^19.0.0" from the root project
+  peer react@"^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc" from next-themes@0.4.4
+  node_modules/next-themes
+    next-themes@"*" from the root project
+
+Could not resolve dependency:
+peer react@"^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0" from react-avatar@5.0.3
+node_modules/react-avatar
+  react-avatar@"^5.0.3" from the root project
+
+Conflicting peer dependency: react@18.3.1
+node_modules/react
+  peer react@"^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0" from react-avatar@5.0.3
+  node_modules/react-avatar
+    react-avatar@"^5.0.3" from the root project
+
+Fix the upstream dependency conflict, or retry
+this command with --force or --legacy-peer-deps
+to accept an incorrect (and potentially broken) dependency resolution.
