@@ -65,14 +65,15 @@ export default function ChatRoom() {
 
     const socketInitializer = async () => {
       try {
-        await fetch("/api/socket")
-        const newSocket = io({
-          path: "/api/socket_io",
+        const newSocket = io(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000', {
+          path: "/api/socket",
           addTrailingSlash: false,
           reconnection: true,
           reconnectionAttempts: 5,
-          transports: ['websocket', 'polling']
+          transports: ['polling', 'websocket'],
+          forceNew: true
         })
+        
         currentSocket = newSocket
         
         newSocket.on("connect", () => {
@@ -81,7 +82,7 @@ export default function ChatRoom() {
         })
 
         newSocket.on("connect_error", (err) => {
-          console.error("Socket connection error:", err)
+          console.error("Connection error:", err)
         })
 
         newSocket.on("user-joined", ({ username, status }: {

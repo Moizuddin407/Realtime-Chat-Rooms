@@ -11,9 +11,9 @@ const SocketHandler = async (req: NextApiRequest, res: NextApiResponseServerIO) 
   } else {
     console.log("Initializing socket")
     const io = new Server(res.socket.server, {
-      path: "/api/socket_io",
+      path: "/api/socket",
       addTrailingSlash: false,
-      transports: ['websocket', 'polling'],
+      transports: ['polling', 'websocket'],
       cors: {
         origin: "*",
         methods: ["GET", "POST"],
