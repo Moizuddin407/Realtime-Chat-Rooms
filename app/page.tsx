@@ -67,8 +67,11 @@ export default function ChatRoom() {
       try {
         await fetch("/api/socket")
         const newSocket = io({
-          path: '/api/socket_io',
+          path: "/api/socket_io",
           addTrailingSlash: false,
+          reconnection: true,
+          reconnectionAttempts: 5,
+          transports: ['websocket', 'polling']
         })
         currentSocket = newSocket
         

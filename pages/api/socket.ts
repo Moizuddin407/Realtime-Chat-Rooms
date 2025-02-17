@@ -13,9 +13,11 @@ const SocketHandler = async (req: NextApiRequest, res: NextApiResponseServerIO) 
     const io = new Server(res.socket.server, {
       path: "/api/socket_io",
       addTrailingSlash: false,
+      transports: ['websocket', 'polling'],
       cors: {
         origin: "*",
         methods: ["GET", "POST"],
+        credentials: true
       },
     })
     res.socket.server.io = io
