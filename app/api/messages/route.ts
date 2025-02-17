@@ -40,7 +40,8 @@ export async function POST(req: Request) {
               name: roomId 
             }
           }
-        }
+        },
+        reactions: {}
       },
       include: {
         sender: true
@@ -59,7 +60,7 @@ export async function POST(req: Request) {
           username: message.sender.username
         },
         createdAt: message.createdAt.toISOString(),
-        reactions: message.reactions
+        reactions: message.reactions as Record<string, string[]> || {}
       }
     })
     
