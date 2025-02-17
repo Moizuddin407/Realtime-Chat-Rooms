@@ -18,11 +18,6 @@ type Message = {
 
 type UserStatus = "online" | "away" | "offline"
 
-type RoomUser = {
-  username: string;
-  status: string;
-}
-
 function Avatar({ name, size = 40 }: { name: string; size?: number }) {
   const initial = name ? name.charAt(0).toUpperCase() : "?"
 
